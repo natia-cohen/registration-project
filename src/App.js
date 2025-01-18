@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import RegisterPage from "./pages/RegisterPage";
+import { RegisterPage } from "./pages/RegisterPage";
 import "./assets/styles/App.css";
 
 function App() {
