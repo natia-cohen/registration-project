@@ -1,0 +1,14 @@
+.register-illustration {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  align-self: start; 
+  margin-top: -20px; 
+}
+
+.register-illustration img {
+  width: 357px;
+  height: 357px;
+  object-fit: cover;
+  margin-top: -30px; 
+}

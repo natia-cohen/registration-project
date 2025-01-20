@@ -1,20 +1,46 @@
 .register-container {
-  width: 100vw;
+  width: 100vw; 
   height: 100vh;
   display: grid;
-  place-items: center;
+  place-items: center; 
   background-color: #5769D4;
-  padding: 20px; 
-  box-sizing: border-box; 
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .register-box {
-  width: clamp(60%, 80vw, 1218px);
-  height: clamp(50%, 80vh, 743px);
+  width: min(90vw, 1218px); 
+  height: min(80vh, 743px); 
   display: grid;
   grid-template-columns: 1fr 1fr; 
-  background-color: #fff;
-  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 24px 24px 24px 24px;
+
+  backdrop-filter: blur(24px);
   box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+}
+
+.register-left {
+  display: grid;
+  grid-template-rows: auto 1fr auto; 
+  align-items: center;
+  justify-items: center;
+
+  width: 732px;
+  height: 100%; 
+  background-color: #3949AB;
+  border-radius: 24px 0px 0px 24px; 
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  color: white;
 }

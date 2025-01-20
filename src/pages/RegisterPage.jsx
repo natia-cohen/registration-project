@@ -6,7 +6,7 @@ import { userService } from "../services/user"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-import { Logo } from "../cmps/Logo";
+import { RegisterLogo } from "../cmps/RegisterLogo";
 import { RegisterIntro } from "../cmps/RegisterIntro"
 import { RegisterIllustration } from "../cmps/RegisterIllustration"
 import { RegisterForm } from "../cmps/RegisterForm"
@@ -46,9 +46,9 @@ export function RegisterPage() {
     <div className="register-container">
       <div className="register-box">
         <div className="register-left">
-          <Logo />
-          <RegisterIntro />
+          <RegisterLogo />
           <RegisterIllustration />
+          <RegisterIntro />
         </div>
         <div className="register-right">
           <RegisterForm

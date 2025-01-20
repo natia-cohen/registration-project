@@ -1,0 +1,13 @@
+.register-logo {
+    position: absolute;
+    top: 20px; 
+    left: 20px; 
+    width: 50px; 
+    height: 50px;
+}
+
+.register-logo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
