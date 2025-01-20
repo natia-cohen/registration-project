@@ -1,0 +1,20 @@
+.register-container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: #5769D4;
+  padding: 20px; 
+  box-sizing: border-box; 
+}
+
+.register-box {
+  width: clamp(60%, 80vw, 1218px);
+  height: clamp(50%, 80vh, 743px);
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
