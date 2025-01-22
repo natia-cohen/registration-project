@@ -1,15 +1,17 @@
-import { userService } from '../../services/user'
-import { store } from '../store'
-import { SET_USER, SET_USERS, REMOVE_USER } from '../reducers/user.reducer'
+import { userService } from '../../services/user';
+import { store } from '../store';
+import { SET_USER, SET_USERS, REMOVE_USER } from '../reducers/user.reducer';
+
 
 export async function loadUsers() {
     try {
-        const users = await userService.getUsers()
-        store.dispatch({ type: SET_USERS, users })
+        const users = await userService.getUsers();
+        store.dispatch({ type: SET_USERS, users });
     } catch (err) {
         console.error('UserActions: error in loadUsers', err)
     }
 }
+
 
 export async function removeUser(userId) {
     try {
@@ -20,31 +22,34 @@ export async function removeUser(userId) {
     }
 }
 
+
 export async function login(credentials) {
     try {
-        const user = await userService.login(credentials)
+        const user = await userService.login(credentials);
         store.dispatch({ type: SET_USER, user })
         return user
     } catch (err) {
         console.error('Cannot login', err)
-        throw err
+        throw err;
     }
 }
+
 
 export async function signup(credentials) {
     try {
-        const user = await userService.signup(credentials)
+        const user = await userService.signup(credentials);
         store.dispatch({ type: SET_USER, user })
-        return user
+        return user;
     } catch (err) {
-        console.error('Cannot signup', err)
-        throw err
+        console.error('Cannot signup', err);
+        throw err;
     }
 }
 
+
 export async function logout() {
     try {
-        await userService.logout()
+        await userService.logout();
         store.dispatch({ type: SET_USER, user: null })
     } catch (err) {
         console.error('Cannot logout', err)
