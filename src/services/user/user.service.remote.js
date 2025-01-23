@@ -12,7 +12,8 @@ export const userService = {
   update,
   getLoggedinUser,
   saveLoggedinUser,
-};
+  sendPasswordResetEmail,
+}
 
 function getUsers() {
   return httpService.get(`user`);
@@ -66,6 +67,17 @@ async function logout() {
 function getLoggedinUser() {
   return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER));
 }
+
+async function sendPasswordResetEmail(email) {
+  try {
+    const response = await httpService.post("auth/reset-password", { email });
+    return response; 
+  } catch (err) {
+    console.error("Error sending password reset email:", err);
+    throw err;
+  }
+}
+
 
 function saveLoggedinUser(user) {
   const userToSave = {
