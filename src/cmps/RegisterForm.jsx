@@ -1,8 +1,8 @@
 export function RegisterForm({ user, credentials, handleChange, handleSubmit, isSignup, setIsSignup }) {
   return (
     <form className="register-form" onSubmit={handleSubmit}>
-      {user && <p>Welcome, {user.email}!</p>}
-
+      <h2 className="form-title">{isSignup ? "Sign Up" : "Log In"}</h2>
+      
       <input
         type="email"
         name="email"
@@ -11,6 +11,7 @@ export function RegisterForm({ user, credentials, handleChange, handleSubmit, is
         onChange={handleChange}
         required
       />
+      
       <input
         type="password"
         name="password"
@@ -19,6 +20,9 @@ export function RegisterForm({ user, credentials, handleChange, handleSubmit, is
         onChange={handleChange}
         required
       />
+      
+      {!isSignup && <a href="#" className="forgot-password">Forgot password?</a>}
+      
       {isSignup && (
         <input
           type="password"
@@ -29,62 +33,24 @@ export function RegisterForm({ user, credentials, handleChange, handleSubmit, is
           required
         />
       )}
-
+      
       <button type="submit" className="register-button">
         {isSignup ? "Sign Up" : "Log In"}
       </button>
-
+      
+      <div className="social-login">
+        <p>Or</p>
+        <button className="google-login">Google</button>
+        <button className="facebook-login">Facebook</button>
+      </div>
+      
       <p className="register-login-link" onClick={() => setIsSignup(!isSignup)}>
-        {isSignup ? "Already have an account? Log in" : "New here? Sign up"}
+        {isSignup ? "Already have an account? Log in" : "Have no account yet? Register"}
       </p>
     </form>
-  )
+  );
 }
 
 
 
-// export function RegisterForm({ user, credentials, handleChange, onSignup }) {
-//   return (
-//     <form className="register-form" onSubmit={onSignup}>
-//       {user && <p>Welcome, {user.username}!</p>}
-  
-//       <input
-//         type="email"
-//         name="email"
-//         placeholder="Email"
-//         value={credentials.email}
-//         onChange={handleChange}
-//         required
-//       />
-//       <input
-//         type="password"
-//         name="password"
-//         placeholder="Password"
-//         value={credentials.password}
-//         onChange={handleChange}
-//         required
-//       />
 
-//       <button
-//         type="button"
-//         className="forgot-password"
-//         // onClick={() => navigate("/forgot-password")}
-//       >
-//         Forgot password?
-//       </button>
-
-//       <button type="submit" className="register-button">
-//         Signup
-//       </button>
-
-//       <div className="register-social-buttons">
-//         <button className="register-social-btn">Google</button>
-//         <button className="register-social-btn">Facebook</button>
-//       </div>
-
-//       <p className="register-login-link">
-//         Have an account? <a href="/login">Log in</a>
-//       </p>
-//     </form>
-//   );
-// }
