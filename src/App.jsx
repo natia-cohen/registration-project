@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify"
 import {RegisterPage}  from "./pages/RegisterPage";
 import "./assets/styles/App.css";
 
-function App() {
+export function App() {
   return (
-    <Router>
+
       <div className="App">
         <ToastContainer position="top-center" autoClose={3000} />
         <Routes>
@@ -14,9 +14,9 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </div>
-    </Router>
-  );
+
+  )
 }
 
-export default App
+
   

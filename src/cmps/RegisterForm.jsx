@@ -38,7 +38,7 @@ export function RegisterForm({ user, credentials, handleChange, handleSubmit, is
         {isSignup ? "Already have an account? Log in" : "New here? Sign up"}
       </p>
     </form>
-  );
+  )
 }
 
 

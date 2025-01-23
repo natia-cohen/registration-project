@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { login, signup } from "../store/actions/user.actions";
 import { userService } from "../services/user";
@@ -16,9 +16,10 @@ import "../assets/styles/RegisterPage.css";
 export function RegisterPage() {
   const [credentials, setCredentials] = useState(userService.getEmptyUser());
   const [isSignup, setIsSignup] = useState(false)
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userModule.user);
+
 
   function handleChange(ev) {
     const field = ev.target.name;
@@ -26,27 +27,73 @@ export function RegisterPage() {
     setCredentials({ ...credentials, [field]: value });
   }
 
+
   async function handleSubmit(ev) {
     ev.preventDefault();
+    console.log("🔹 Form submitted with:", credentials);
 
     try {
-      let loggedInUser;
-      if (isSignup) {
-        if (credentials.password !== credentials.confirmPassword) {
-          toast.error("Passwords do not match");
-          return;
+        if (isSignup) {
+            if (credentials.password !== credentials.confirmPassword) {
+                toast.error("Passwords do not match");
+                return;
+            }
+            console.log("📤 Dispatching signup with:", credentials);
         }
-        loggedInUser = await dispatch(signup(credentials));
-      } else {
-        loggedInUser = await dispatch(login(credentials));
-      }
 
-      toast.success(`Welcome, ${loggedInUser.email}! 🎉`);
-      navigate("/dashboard")
+ 
+        const actionResult = await dispatch(isSignup ? signup(credentials) : login(credentials));
+        console.log("🔹 Action result from dispatch:", actionResult);
+
+   
+        const loggedInUser = actionResult?.user || actionResult;
+        console.log("🔍 Checking loggedInUser:", loggedInUser);
+
+      
+        if (loggedInUser) {
+            console.log('✅ User logged in successfully:', loggedInUser);
+            toast.success(`Welcome, ${loggedInUser.email}! 🎉`);
+        } else {
+            console.error("❌ Signup/Login failed: No user returned.")
+            toast.error("Authentication failed. Please try again.")
+        }
     } catch (err) {
-      toast.error("Authentication failed. Please try again.");
+        console.error("❌ Error during authentication:", err)
+        toast.error(err?.message || "Authentication failed. Please try again.")
     }
-  }
+}
+
+//   async function handleSubmit(ev) {
+//     ev.preventDefault();
+//     const actionResult = await dispatch(signup(credentials));
+// console.log("🔹 Action result from dispatch:", actionResult);
+// const loggedInUser = actionResult?.user || actionResult;
+// console.log("🔍 Checking loggedInUser:", loggedInUser);
+
+    
+//     // console.log("🔹 Form submitted with:", credentials)
+//     // try {S
+//     //   let loggedInUser
+//     //   if (isSignup) {
+//     //     if (credentials.password !== credentials.confirmPassword) {
+//     //       toast.error("Passwords do not match");
+//     //       return;
+//     //     }
+//     //     console.log("📤 Dispatching signup with:", credentials);
+//     //     loggedInUser = await dispatch(signup(credentials));
+//     //     console.log("🔹 Received loggedInUser:", loggedInUser)
+//     //   } else {
+//     //     loggedInUser = await dispatch(login(credentials));
+//     //   }
+//     //   console.log("🔍 Checking loggedInUser:", loggedInUser)
+    
+
+//     //   // toast.success(`Welcome, ${loggedInUser.email}! 🎉`);
+//     //   // navigate("/dashboard")
+//     // } catch (err) {
+//     //   toast.error("Authentication failed. Please try again.");
+//     // }
+//   }
 
   return (
     <div className="register-container">

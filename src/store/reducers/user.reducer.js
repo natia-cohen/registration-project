@@ -12,6 +12,7 @@ const initialState = {
 export function userReducer(state = initialState, action) {
     switch (action.type) {
         case SET_USER:
+            console.log("🟢 Redux updated, user:", action.user)
             return { ...state, user: action.user }
         case SET_USERS:
             return { ...state, users: action.users }
