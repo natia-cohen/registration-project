@@ -20,31 +20,30 @@ export async function removeUser(userId) {
   }
 }
 
-export async function login(credentials) {
-  try {
-    const user = await userService.login(credentials);
-    store.dispatch({ type: SET_USER, user });
-    return user;
-  } catch (err) {
-    console.error("Cannot login", err);
-    throw err;
-  }
+export function login(credentials) {
+  return async (dispatch) => {
+    try {
+      const user = await userService.login(credentials)
+      dispatch({ type: SET_USER, user });
+      return user;
+    } catch (err) {
+      console.error("Cannot login", err)
+      throw err;
+    }
+  };
 }
+
 
 export function signup(credentials) {
   return async (dispatch) => {
     try {
-      console.log("📤 Sending signup request:", credentials);
-      const user = await userService.signup(credentials);
-      console.log("✅ Signup successful, user:", user);
+      const user = await userService.signup(credentials)
+      dispatch({ type: SET_USER, user })
 
-      dispatch({ type: SET_USER, user });
-      console.log("🟢 Dispatched SET_USER to Redux store", user);
-
-      return user;
+      return user
     } catch (err) {
-      console.error("❌ Cannot signup", err);
-      throw err;
+      console.error("Cannot signup", err)
+      throw err
     }
   };
 }

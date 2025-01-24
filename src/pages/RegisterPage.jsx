@@ -1,25 +1,32 @@
-import { useState } from "react";
-// import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { login, signup } from "../store/actions/user.actions";
-import { userService } from "../services/user";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
+import { useDispatch, useSelector } from "react-redux"
+import { login, signup } from "../store/actions/user.actions"
+import { userService } from "../services/user"
+import { loginWithFacebook } from "../services/facebookService"
+import { toast } from "react-toastify"
 
-import { RegisterLogo } from "../cmps/RegisterLogo";
-import { RegisterIntro } from "../cmps/RegisterIntro";
-import { RegisterIllustration } from "../cmps/RegisterIllustration";
-import { RegisterForm } from "../cmps/RegisterForm";
+import { RegisterLogo } from "../cmps/RegisterLogo"
+import { RegisterIntro } from "../cmps/RegisterIntro"
+import { RegisterIllustration } from "../cmps/RegisterIllustration"
+import { RegisterForm } from "../cmps/RegisterForm"
 
-import "../assets/styles/RegisterPage.css";
+import "../assets/styles/RegisterPage.css"
+import "react-toastify/dist/ReactToastify.css"
 
 export function RegisterPage() {
   const [credentials, setCredentials] = useState(userService.getEmptyUser());
   const [isSignup, setIsSignup] = useState(false)
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userModule.user);
 
+  useEffect(() => {
+    if (user) {
+      toast.success(`Welcome, ${user.email}! 🎉`)
+      navigate("/welcome")
+    }
+  }, [user, navigate])
 
   function handleChange(ev) {
     const field = ev.target.name;
@@ -27,73 +34,44 @@ export function RegisterPage() {
     setCredentials({ ...credentials, [field]: value });
   }
 
-
   async function handleSubmit(ev) {
-    ev.preventDefault();
-    console.log("🔹 Form submitted with:", credentials);
+    ev.preventDefault()
+    
+    try {
+      let loggedInUser
+      if (isSignup) {
+        if (credentials.password !== credentials.confirmPassword) {
+          toast.error("Passwords do not match")
+          return;
+        }
+        loggedInUser = await dispatch(signup(credentials));
+      } else {
+        loggedInUser = await dispatch(login(credentials));
+      }
+
+      if (loggedInUser) {
+        toast.success(`Welcome, ${loggedInUser.email}! 🎉`);
+        navigate("/welcome")
+      }
+
+    } catch (err) {
+      toast.error("Authentication failed. Please try again.");
+    }
+  }
+
+  const handleFacebookLogin = async (ev) => {
+    ev.preventDefault()
 
     try {
-        if (isSignup) {
-            if (credentials.password !== credentials.confirmPassword) {
-                toast.error("Passwords do not match");
-                return;
-            }
-            console.log("📤 Dispatching signup with:", credentials);
-        }
-
- 
-        const actionResult = await dispatch(isSignup ? signup(credentials) : login(credentials));
-        console.log("🔹 Action result from dispatch:", actionResult);
-
-   
-        const loggedInUser = actionResult?.user || actionResult;
-        console.log("🔍 Checking loggedInUser:", loggedInUser);
-
-      
-        if (loggedInUser) {
-            console.log('✅ User logged in successfully:', loggedInUser);
-            toast.success(`Welcome, ${loggedInUser.email}! 🎉`);
-        } else {
-            console.error("❌ Signup/Login failed: No user returned.")
-            toast.error("Authentication failed. Please try again.")
-        }
-    } catch (err) {
-        console.error("❌ Error during authentication:", err)
-        toast.error(err?.message || "Authentication failed. Please try again.")
+      const userInfo = await loginWithFacebook()
+      console.log("User Info:", userInfo)
+      alert(`Hello, ${userInfo.name}`)
+      navigate("/welcome")
+    } catch (error) {
+      console.error("Login failed:", error);
     }
-}
+  }
 
-//   async function handleSubmit(ev) {
-//     ev.preventDefault();
-//     const actionResult = await dispatch(signup(credentials));
-// console.log("🔹 Action result from dispatch:", actionResult);
-// const loggedInUser = actionResult?.user || actionResult;
-// console.log("🔍 Checking loggedInUser:", loggedInUser);
-
-    
-//     // console.log("🔹 Form submitted with:", credentials)
-//     // try {S
-//     //   let loggedInUser
-//     //   if (isSignup) {
-//     //     if (credentials.password !== credentials.confirmPassword) {
-//     //       toast.error("Passwords do not match");
-//     //       return;
-//     //     }
-//     //     console.log("📤 Dispatching signup with:", credentials);
-//     //     loggedInUser = await dispatch(signup(credentials));
-//     //     console.log("🔹 Received loggedInUser:", loggedInUser)
-//     //   } else {
-//     //     loggedInUser = await dispatch(login(credentials));
-//     //   }
-//     //   console.log("🔍 Checking loggedInUser:", loggedInUser)
-    
-
-//     //   // toast.success(`Welcome, ${loggedInUser.email}! 🎉`);
-//     //   // navigate("/dashboard")
-//     // } catch (err) {
-//     //   toast.error("Authentication failed. Please try again.");
-//     // }
-//   }
 
   return (
     <div className="register-container">
@@ -109,78 +87,14 @@ export function RegisterPage() {
             credentials={credentials}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
+            handleFacebookLogin={handleFacebookLogin}
             isSignup={isSignup}
             setIsSignup={setIsSignup}
+         
           />
         </div>
       </div>
     </div>
   );
 }
-
-// import { useState, useEffect } from "react"
-// import { useNavigate } from "react-router"
-// import { useDispatch, useSelector } from "react-redux"
-// import { signup } from "../store/actions/user.actions"
-// import { userService } from "../services/user"
-// import { toast } from "react-toastify"
-// import "react-toastify/dist/ReactToastify.css"
-
-// import { RegisterLogo } from "../cmps/RegisterLogo";
-// import { RegisterIntro } from "../cmps/RegisterIntro"
-// import { RegisterIllustration } from "../cmps/RegisterIllustration"
-// import { RegisterForm } from "../cmps/RegisterForm"
-
-// import "../assets/styles/RegisterPage.css"
-
-// export function RegisterPage() {
-//   const [credentials, setCredentials] = useState(userService.getEmptyUser());
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const user = useSelector((state) => state.userModule.user);
-
-//   useEffect(() => {
-//     navigate("/register")
-//   }, [navigate])
-
-//   function handleChange(ev) {
-//     const field = ev.target.name
-//     const value = ev.target.value
-//     setCredentials({ ...credentials, [field]: value })
-//   }
-
-//   async function onSignup(ev) {
-//     ev.preventDefault();
-//     if (!credentials.username || !credentials.password || !credentials.fullname) return;
-
-//     try {
-//       await dispatch(signup(credentials));
-//       toast.success(`Welcome, ${credentials.fullname}! 🎉`);
-//       navigate("/");
-//     } catch (err) {
-//       toast.error("Signup failed. Please try again.");
-//     }
-//   }
-
-//   return (
-//     <div className="register-container">
-//       <div className="register-box">
-//         <div className="register-left">
-//           <RegisterLogo />
-//           <RegisterIllustration />
-//           <RegisterIntro />
-//         </div>
-//         <div className="register-right">
-//           <RegisterForm
-//             user={user}
-//             credentials={credentials}
-//             handleChange={handleChange}
-//             onSignup={onSignup}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 
