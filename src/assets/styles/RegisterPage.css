@@ -1,46 +1,51 @@
+
 .register-container {
-  width: 100vw; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
-  display: grid;
-  place-items: center; 
-  background-color: #5769D4;
-  padding: 20px;
-  box-sizing: border-box;
+  width: 100vw;
+  background: #5769D4;
+  overflow: hidden;
 }
+
 
 .register-box {
-  width: min(90vw, 1218px); 
-  height: min(80vh, 743px); 
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 24px 24px 24px 24px;
-
-  backdrop-filter: blur(24px);
-  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  width: 1100px; 
+  height: 650px; 
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); 
 }
 
-.register-left {
-  display: grid;
-  grid-template-rows: auto 1fr auto; 
-  align-items: center;
-  justify-items: center;
 
-  width: 732px;
-  height: 100%; 
-  background-color: #3949AB;
-  border-radius: 24px 0px 0px 24px; 
-  backdrop-filter: blur(24px);
+.register-left {
+  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 20px;
-  color: white;
+  gap: 24px;
+  padding: 40px;
+  
+  background: #3949AB;
+  backdrop-filter: blur(12px);
+  border-radius: 24px 0px 0px 24px;
+} 
+
+.register-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  gap: 24px;
+  
+  background: #FFFFFF;
+  backdrop-filter: blur(12px);
+  border-radius: 0px 24px 24px 0px;
+  border: 1px solid #E6E9FA;
 }

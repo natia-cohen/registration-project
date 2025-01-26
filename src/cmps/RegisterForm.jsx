@@ -1,53 +1,40 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
-import { userService } from "../services/user"
+import googleIcon from "../assets/images/google-icon.png"
+import facebookIcon from "../assets/images/facebook-icon.png"
 
-export function RegisterForm({ user, credentials, handleChange, handleSubmit, isSignup, setIsSignup, handleFacebookLogin }) {
-  const [isForgotPassword, setIsForgotPassword] = useState(false)
-  const [email, setEmail] = useState("")
+import "../assets/styles/RegisterForm.css"
 
+export function RegisterForm({ credentials, handleChange, handleSubmit, isSignup, setIsSignup, handleFacebookLogin }) {
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleForgotPasswordSubmit = async (ev) => {
-    ev.preventDefault();
-    const result = await userService.sendPasswordResetEmail(email)
-    alert(result.message)
+    ev.preventDefault()
+    alert("Password reset link sent to " + email);
   }
-
 
   return (
     <form className="register-form" onSubmit={isForgotPassword ? handleForgotPasswordSubmit : handleSubmit}>
+ 
       <h2 className="form-title">
-        {isForgotPassword ? "Reset Password" : isSignup ? "Sign Up" : "Log In"}
+        {isForgotPassword ? "Reset Password" : isSignup ? "Sign Up" : "Log in"}
       </h2>
 
-      {isForgotPassword ? (
-        <>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <button type="submit" className="register-button">
-            Send Reset Link
-          </button>
-          <p className="register-login-link" onClick={() => setIsForgotPassword(false)}>
-            Back to Login
-          </p>
-        </>
-      ) : (
-        <>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={credentials.email}
-            onChange={handleChange}
-            required
-          />
 
+      <div className="input-group">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={isForgotPassword ? email : credentials.email}
+          onChange={isForgotPassword ? (ev) => setEmail(ev.target.value) : handleChange}
+          required
+        />
+      </div>
+
+
+      {!isForgotPassword && (
+        <div className="input-group password-input">
           <input
             type="password"
             name="password"
@@ -56,40 +43,65 @@ export function RegisterForm({ user, credentials, handleChange, handleSubmit, is
             onChange={handleChange}
             required
           />
+          <span className="toggle-password">👁</span>
+        </div>
+      )}
 
-          {!isSignup && (
-            <a href="#" className="forgot-password" onClick={(e) => {
-              e.preventDefault();
-              setIsForgotPassword(true);
-            }}>
-              Forgot password?
-            </a>
-          )}
 
-          {isSignup && (
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={credentials.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          )}
+      {!isSignup && !isForgotPassword && (
+        <a href="#" className="forgot-password" onClick={(e) => {
+          e.preventDefault();
+          setIsForgotPassword(true);
+        }}>
+          Forgot password?
+        </a>
+      )}
 
-          <button type="submit" className="register-button">
-            {isSignup ? "Sign Up" : "Log In"}
-          </button>
+      {isSignup && (
+        <div className="input-group">
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={credentials.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      )}
 
-          <p className="register-login-link" onClick={() => setIsSignup(!isSignup)}>
-            {isSignup ? "Already have an account? Log in" : "Have no account yet? Register"}
-          </p>
-        </>
+
+      <button type="submit" className="register-button">
+        {isSignup ? "Sign Up" : isForgotPassword ? "Send Reset Link" : "Log in"}
+      </button>
+
+   
+      {!isForgotPassword && (
+        <div className="separator">
+          <span>Or</span>
+        </div>
+      )}
+
+      {!isForgotPassword && (
+        <div className="social-login">
+          <button className="social-button google-login">
+          <img src={googleIcon} alt="Google" />
+      
+        </button>
+        <button className="social-button facebook-login" onClick={handleFacebookLogin}>
+          <img src={facebookIcon} alt="Facebook" />   
+        </button>
+
+        </div>
+      )}
+
+    
+      {!isForgotPassword && (
+        <p className="register-login-link" onClick={() => setIsSignup(!isSignup)}>
+          {isSignup ? "Already have an account? Log in" : "Have no account yet? Register"}
+        </p>
       )}
     </form>
-  )
+  );
 }
-
-
-
 

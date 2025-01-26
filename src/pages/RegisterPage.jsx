@@ -23,7 +23,6 @@ export function RegisterPage() {
 
   useEffect(() => {
     if (user) {
-      toast.success(`Welcome, ${user.email}! 🎉`)
       navigate("/welcome")
     }
   }, [user, navigate])
@@ -95,6 +94,6 @@ export function RegisterPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
