@@ -13,6 +13,7 @@ export const userService = {
   getLoggedinUser,
   saveLoggedinUser,
   sendPasswordResetEmail,
+  resetPassword,
 }
 
 function getUsers() {
@@ -70,10 +71,26 @@ function getLoggedinUser() {
 
 async function sendPasswordResetEmail(email) {
   try {
-    const response = await httpService.post("auth/reset-password", { email });
-    return response; 
+    const response = await httpService.post("auth/forgot-password", { email });
+    return response
   } catch (err) {
     console.error("Error sending password reset email:", err);
+    throw err;
+  }
+}
+
+export async function resetPassword(token, newPassword) {
+  try {
+    console.log("🔍 Sending request to /auth/reset-password with:", { token, newPassword });
+
+    const response = await httpService.post("auth/reset-password", {
+      token: token,
+      new_password: newPassword
+    })
+    console.log("✅ API Response:", response);
+    return response
+  } catch (err) {
+    console.error("Error resetting password:", err);
     throw err;
   }
 }

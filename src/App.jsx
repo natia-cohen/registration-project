@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify"
 import {RegisterPage}  from "./pages/RegisterPage"
 import { WelcomePage } from "./pages/WelcomePage"
 import "./assets/styles/App.css";
+import { ResetPassword } from "./pages/ResetPassword";
+
 
 export function App() {
   useEffect(() => {
@@ -27,6 +29,7 @@ export function App() {
           <Route path="/" element={<Navigate to="/register" />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/welcome" element={<WelcomePage />} /> 
+          <Route path="/reset-password" element={<ResetPassword />} />  
         </Routes>
       </div>
 
