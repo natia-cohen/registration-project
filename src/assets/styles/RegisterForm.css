@@ -188,5 +188,27 @@
   cursor: pointer;
   text-decoration: underline;
 }
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  color: #3949AB;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.back-button:hover {
+  background: rgba(57, 73, 171, 0.1); 
+}
+
+.back-button:active {
+  background: rgba(57, 73, 171, 0.2); 
+}
 
 
