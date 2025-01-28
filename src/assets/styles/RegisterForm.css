@@ -212,3 +212,46 @@
 }
 
 
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.signup-text {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #7B7B7B;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.signup-text:hover {
+  color: #3949AB;
+}
+
+.signup-button {
+  width: 358px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3949AB;
+  background: transparent;
+  border: 2px solid #3949AB;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.signup-button:hover {
+  background: #3949AB;
+  color: #FFFFFF;
+}
